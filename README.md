@@ -1,6 +1,6 @@
 # The Emotion Core
 
-Part of the [R.Giscard project](https://github.com/an-dr/r_giskard)
+Part of the [R.Giskard project](https://github.com/an-dr/r_giskard)
 
 The aim of this library is to implement an emotion model that could be used by other applications implementing a behavior modifications (emotions) based on changing of input data.
 
