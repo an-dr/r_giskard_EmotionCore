@@ -1,10 +1,12 @@
-# Emotion Core
+# The Emotion Core
 
-The aim of this library is to implement Emotion model that could be used by other applications to implement a behavior modifications based on changing of input data. E.g. a robot can change it's behavior based on data from sensors.
+Part of the [R.Giscard project](https://github.com/an-dr/r_giskard)
+
+The aim of this library is to implement an emotion model that could be used by other applications implementing a behavior modifications (emotions) based on changing of input data.
 
 ## Structure
 
-Emotion core consists of:
+The core consists of:
 
 - Input Data Descriptors - describes data from sensors and how it should affect the core
 - Emotional States Descriptors - named states of the core described by specific values of core parameters.
@@ -26,7 +28,7 @@ Example of core parameters:
     "serotonin" ]
 ```
 
-Example of a core's Emotion state:
+Example of a core's Emotional state:
 
 ```json
 {
