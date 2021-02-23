@@ -20,19 +20,20 @@
 //
 // *************************************************************************
 
-#include "AnimalEmotionCore.hpp"
+#include "AnimalEmotionCore/AnimalEmotionCore.hpp"
 
 AnimalEmotionCore::AnimalEmotionCore() {
 
     // Title               : Biochemistry of Hormones that Influences Feelings
     // Author(s)           : Monica Butnariu & Ioan Sarac
     // Published           : 2019
-    AddParam("adrenaline", 0);  ///< When need energy, minutes scale
-    AddParam("cortisol", 0);    ///< Stress
-    AddParam("dopamine", 0);    ///< Happiness and curiosity
-    AddParam("melatonin", 0);   ///< When don't need energy, daily scale (opposite side: depression)
-    AddParam("oxytocin", 0);    ///< Calm and trust (opposite side: anxiety)
-    AddParam("serotonin", 0);   ///< Being kind (opposite side: anger, violence)
+    // TODO: set values based on real human data
+    AddParam("adrenaline", 100);  ///< When need energy, minutes scale
+    AddParam("cortisol", 100);    ///< Stress
+    AddParam("dopamine", 100);    ///< Happiness and curiosity
+    AddParam("melatonin", 100);   ///< When don't need energy, daily scale (opposite side: depression)
+    AddParam("oxytocin", 100);    ///< Calm and trust (opposite side: anxiety)
+    AddParam("serotonin", 100);   ///< Being kind (opposite side: anger, violence)
 
     //    Title               : Basic Emotions
     //    Author(s)           : Magda Kowalska
@@ -42,4 +43,8 @@ AnimalEmotionCore::AnimalEmotionCore() {
     AddState({.name = "sadness, grief", .conditions = {}});
     AddState({.name = "anger, rage", .conditions = {}});
     AddState({.name = "fear, anxiety", .conditions = {}});
+
+    UpdateCoreParamsWithTimeUpdate(0);
+    UpdateParamsTotal();
+    UpdateCurrentEmotionalState();
 }

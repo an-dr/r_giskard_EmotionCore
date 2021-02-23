@@ -164,17 +164,17 @@ typedef enum {
     _ERROR_LASTERROR     = 2000,  ///< Users can add values starting here
     ERROR_NOTEXIST       = 2000,  ///< Entity doesn't exists
     ERROR_WRONGSTATE     = 2001,  ///< System is in incorrect/unexpected state
-} error_t;
+} emotion_core_err_t;
 
 
-#define RETURN_ON_ERROR(x)   \
-    do {                     \
-        error_t res = (x);   \
-        if (res != NO_ERROR) \
-            return res;      \
+#define RETURN_ON_ERROR(x)            \
+    do {                              \
+        emotion_core_err_t res = (x); \
+        if (res != NO_ERROR)          \
+            return res;               \
     } while (0)
 
-inline void CRITICAL_ERROR(error_t err, const std::string &msg) {
+inline void CRITICAL_ERROR(emotion_core_err_t err, const std::string &msg) {
     std::cout << "ERROR " << int(err) << ": " << msg << std::endl;
     throw err;
 }

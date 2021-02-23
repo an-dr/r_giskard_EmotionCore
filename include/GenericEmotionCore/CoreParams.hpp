@@ -25,8 +25,8 @@
 #include <map>
 #include <string>
 #include "CoreParams_types.hpp"
+#include "GenericEmotionCore/emotion_core_err_t.h"
 #include "InDataDescriptors.hpp"
-#include "error_t.h"
 
 typedef std::map<std::string, float> CoreParamsMap_t;
 
@@ -37,19 +37,19 @@ private:
 public:
     bool IsParamExists(const std::string &name);
 
-    error_t AddParam(const std::string &name);
+    emotion_core_err_t AddParam(const std::string &name);
 
-    error_t AddParam(const std::string &name, float init_value);
+    emotion_core_err_t AddParam(const std::string &name, float init_value);
 
-    error_t IncrementParam(const std::string &name, float value);
+    emotion_core_err_t IncrementParam(const std::string &name, float value);
 
-    error_t LoadParamsSet(const in_params_t &params_set);
+    emotion_core_err_t LoadParamsSet(const in_params_t &params_set);
 
     float GetParam(const std::string &name);
 
     const CoreParamsMap_t *GetParams();
 
-    error_t RemoveAllParams();
+    emotion_core_err_t RemoveAllParams();
 
-    error_t SetParam(const std::string &name, float value);
+    emotion_core_err_t SetParam(const std::string &name, float value);
 };

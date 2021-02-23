@@ -32,7 +32,7 @@ bool CoreParams::IsParamExists(const string &name) {
     }
 }
 
-error_t CoreParams::AddParam(const string &name) {
+emotion_core_err_t CoreParams::AddParam(const string &name) {
     if (IsParamExists(name)) {
         return ERROR_EXIST;
     } else {
@@ -41,7 +41,7 @@ error_t CoreParams::AddParam(const string &name) {
     return NO_ERROR;
 }
 
-error_t CoreParams::AddParam(const string &name, float init_value) {
+emotion_core_err_t CoreParams::AddParam(const string &name, float init_value) {
     if (IsParamExists(name)) {
         return ERROR_EXIST;
     } else {
@@ -50,12 +50,12 @@ error_t CoreParams::AddParam(const string &name, float init_value) {
     return NO_ERROR;
 }
 
-error_t CoreParams::IncrementParam(const string &name, float value) {
+emotion_core_err_t CoreParams::IncrementParam(const string &name, float value) {
     _map[name] += value;
     return NO_ERROR;
 }
 
-error_t CoreParams::LoadParamsSet(const in_params_t &params_set) {
+emotion_core_err_t CoreParams::LoadParamsSet(const in_params_t &params_set) {
     for (auto i = params_set.begin(); i != params_set.end(); i++) {
         AddParam(*i);
     }
@@ -74,12 +74,12 @@ const CoreParamsMap_t *CoreParams::GetParams() {
     return &_map;
 }
 
-error_t CoreParams::RemoveAllParams() {
+emotion_core_err_t CoreParams::RemoveAllParams() {
     _map.clear();
     return NO_ERROR;
 }
 
-error_t CoreParams::SetParam(const string &name, float value) {
+emotion_core_err_t CoreParams::SetParam(const string &name, float value) {
     if (IsParamExists(name)) {
         _map[name] = value;
     } else {

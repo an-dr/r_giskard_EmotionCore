@@ -20,12 +20,12 @@
 //
 // *************************************************************************
 
-#include "GenericEmotionCore.hpp"
+#include "GenericEmotionCore/GenericEmotionCore.hpp"
 
 using namespace std;
 
 
-error_t GenericEmotionCore::UpdateCurrentEmotionalState() {
+emotion_core_err_t GenericEmotionCore::UpdateCurrentEmotionalState() {
     EmotionalStateDescriptorsList_t::const_iterator est_it;
     for (est_it = states.GetList().begin(); est_it != states.GetList().end(); est_it++) {
         if (CheckState(&*est_it)) {
@@ -37,7 +37,7 @@ error_t GenericEmotionCore::UpdateCurrentEmotionalState() {
     return NO_ERROR;
 }
 
-error_t GenericEmotionCore::WriteSensorData(SensorDataStruct_t data) {
+emotion_core_err_t GenericEmotionCore::WriteSensorData(SensorDataStruct_t data) {
     RETURN_ON_ERROR(UpdateCoreParamsFromSensorData(data));
     RETURN_ON_ERROR(UpdateParamsTotal());
     RETURN_ON_ERROR(UpdateCurrentEmotionalState());
@@ -52,14 +52,18 @@ const EmotionalStateDescriptorStruct_t *GenericEmotionCore::GetState() {
     }
 }
 
-error_t GenericEmotionCore::WriteTempImpact(const TemporaryCoreImpact_t &data) {
+const CoreParamsMap_t *GenericEmotionCore::GetParams() {
+    return _params_total.GetParams();
+}
+
+emotion_core_err_t GenericEmotionCore::WriteTempImpact(const TemporaryCoreImpact_t &data) {
     _params_tempImpacts.push_back(data);
     RETURN_ON_ERROR(UpdateParamsTotal());
     RETURN_ON_ERROR(UpdateCurrentEmotionalState());
     return NO_ERROR;
 }
 
-error_t GenericEmotionCore::UpdateCoreParamsFromSensorData(const SensorDataStruct_t &data) {
+emotion_core_err_t GenericEmotionCore::UpdateCoreParamsFromSensorData(const SensorDataStruct_t &data) {
     float old_s_val                        = _sensorValues[data.sensor_name];
     float new_s_val                        = data.value;
     float delta_s_val                      = new_s_val - old_s_val;
@@ -85,7 +89,7 @@ const InDataDescriptorStruct_t *GenericEmotionCore::GetDescriptorForInData(const
     return nullptr;
 }
 
-error_t GenericEmotionCore::CheckParamVsCondition(const string &par_name, const float &par_val, const ConditionStruct_t &cond) {
+emotion_core_err_t GenericEmotionCore::CheckParamVsCondition(const string &par_name, const float &par_val, const ConditionStruct_t &cond) {
     if (par_name != cond.param) {
         return ERROR_INVAL;
     }
@@ -108,7 +112,7 @@ error_t GenericEmotionCore::CheckParamVsCondition(const string &par_name, const 
 
 bool GenericEmotionCore::CheckState(const EmotionalStateDescriptorStruct_t *emo) {
     bool res = false;
-    error_t comp_result;
+    emotion_core_err_t comp_result;
     for (auto conds_it = emo->conditions.begin(); conds_it != emo->conditions.end(); conds_it++) {
         for (auto core_param_it = _params_total.GetParams()->begin();
              core_param_it != _params_total.GetParams()->end();
@@ -126,7 +130,7 @@ bool GenericEmotionCore::CheckState(const EmotionalStateDescriptorStruct_t *emo)
     return res;
 }
 
-error_t GenericEmotionCore::UpdateCoreParamsWithTimeUpdate(const int &time_duration_ms) {
+emotion_core_err_t GenericEmotionCore::UpdateCoreParamsWithTimeUpdate(const int &time_duration_ms) {
     float change;
     for (auto it = _params_tempImpacts.begin(); it != _params_tempImpacts.end();) {
         change = abs((*it).change_per_sec) * time_duration_ms * 0.001;
@@ -153,22 +157,22 @@ error_t GenericEmotionCore::UpdateCoreParamsWithTimeUpdate(const int &time_durat
     return NO_ERROR;
 }
 
-error_t GenericEmotionCore::WriteTime(const int &time_duration_ms) {
+emotion_core_err_t GenericEmotionCore::WriteTime(const int &time_duration_ms) {
     RETURN_ON_ERROR(UpdateCoreParamsWithTimeUpdate(time_duration_ms));
     RETURN_ON_ERROR(UpdateParamsTotal());
     RETURN_ON_ERROR(UpdateCurrentEmotionalState());
     return NO_ERROR;
 }
 
-error_t GenericEmotionCore::SetState(const EmotionalStateDescriptorStruct_t *state) {
+emotion_core_err_t GenericEmotionCore::SetState(const EmotionalStateDescriptorStruct_t *state) {
     _EmotionalState_p = state;
     return NO_ERROR;
 }
 
 GenericEmotionCore::GenericEmotionCore() : _EmotionalState_p(nullptr),
-                                               _non_specified_state({.name = "non-specified", .conditions = {}}) {}
+                                           _non_specified_state({.name = "non-specified", .conditions = {}}) {}
 
-error_t GenericEmotionCore::UpdateParamsTotal() {
+emotion_core_err_t GenericEmotionCore::UpdateParamsTotal() {
     float val;
     for (auto i = _params_base.GetParams()->begin(); i != _params_base.GetParams()->end(); i++) {
         val = _params_base.GetParam(i->first);
@@ -183,13 +187,13 @@ error_t GenericEmotionCore::UpdateParamsTotal() {
     return NO_ERROR;
 }
 
-error_t GenericEmotionCore::AddParam(const string &name, float default_value) {
+emotion_core_err_t GenericEmotionCore::AddParam(const string &name, float default_value) {
     RETURN_ON_ERROR(_params_base.AddParam(name, default_value));
     RETURN_ON_ERROR(_params_sensorsImpacts.AddParam(name, 0));
     RETURN_ON_ERROR(_params_total.AddParam(name, 0));
     return NO_ERROR;
 }
-error_t GenericEmotionCore::AddState(EmotionalStateDescriptorStruct_t newState) {
+emotion_core_err_t GenericEmotionCore::AddState(EmotionalStateDescriptorStruct_t newState) {
     for (auto i = newState.conditions.begin(); i != newState.conditions.end(); i++) {
         if (!_params_base.IsParamExists(i->param)) {
             CRITICAL_ERROR(ERROR_NOENT, "Parameter in the Emotion State Descriptor is not represented in this core yet.");
@@ -199,7 +203,7 @@ error_t GenericEmotionCore::AddState(EmotionalStateDescriptorStruct_t newState) 
     RETURN_ON_ERROR(UpdateCurrentEmotionalState());
     return NO_ERROR;
 }
-error_t GenericEmotionCore::AddSensorDataDescriptor(const InDataDescriptorStruct_t &newDescriptor) {
+emotion_core_err_t GenericEmotionCore::AddSensorDataDescriptor(const InDataDescriptorStruct_t &newDescriptor) {
     for (auto i = newDescriptor.weights.begin(); i != newDescriptor.weights.end(); i++) {
         if (!_params_base.IsParamExists(i->core_param_name)) {
             CRITICAL_ERROR(ERROR_NOENT, "Parameter in the Data Descriptor is not represented in this core yet.");

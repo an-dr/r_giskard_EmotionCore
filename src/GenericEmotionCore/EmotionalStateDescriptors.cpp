@@ -25,7 +25,7 @@
 
 using namespace std;
 
-error_t EmotionalStateDescriptors::Add(EmotionalStateDescriptorStruct_t newState) {
+emotion_core_err_t EmotionalStateDescriptors::Add(EmotionalStateDescriptorStruct_t newState) {
     for (auto i = _list.begin(); i != _list.end(); i++) {
         if (newState.name == i->name) {
             return ERROR_EXIST;  // state already exists
@@ -35,7 +35,7 @@ error_t EmotionalStateDescriptors::Add(EmotionalStateDescriptorStruct_t newState
     return NO_ERROR;
 }
 
-error_t EmotionalStateDescriptors::Remove(string name) {
+emotion_core_err_t EmotionalStateDescriptors::Remove(string name) {
     for (auto i = _list.begin(); i != _list.end(); i++) {
         if (name == i->name) {
             _list.erase(i);
@@ -54,7 +54,7 @@ const EmotionalStateDescriptorStruct_t *EmotionalStateDescriptors::Get(string na
     return nullptr;  // state didn't exists
 }
 
-error_t EmotionalStateDescriptors::GetParamsSet(in_params_t &params_holder) const {
+emotion_core_err_t EmotionalStateDescriptors::GetParamsSet(in_params_t &params_holder) const {
     for (auto i_est = _list.begin(); i_est != _list.end(); i_est++) {
         for (auto i_cond = i_est->conditions.begin(); i_cond != i_est->conditions.end(); i_cond++) {
             params_holder.insert(i_cond->param);
