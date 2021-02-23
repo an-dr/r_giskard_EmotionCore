@@ -1,0 +1,71 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"extensions": {
+		"recommendations": [
+			"cheshirekow.cmake-format",
+			"llvm-vs-code-extensions.vscode-clangd",
+		]
+	},
+	"settings": {
+		"C_Cpp.default.includePath": [
+			"${workspaceFolder}/include"
+		],
+		"cmake.sourceDirectory": "${workspaceFolder}",
+		"[c]": {
+			"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+		},
+		"[cpp]": {
+			"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
+		},
+		"[cmake]": {
+			"editor.defaultFormatter": "cheshirekow.cmake-format"
+		},
+	},
+	"launch": {
+		"configurations": [
+			{
+				"name": "(AnimalEmotionCore Example) Launch",
+				"type": "cppdbg",
+				"request": "launch",
+				"program": "${workspaceFolder}/build/Example_AnimalEmotionCore.exe",
+				"args": [],
+				"stopAtEntry": false,
+				"cwd": "${workspaceFolder}/build",
+				"environment": [],
+				"MIMode": "gdb",
+				"miDebuggerPath": "gdb",
+				"setupCommands": [
+					{
+						"description": "Enable pretty-printing for gdb",
+						"text": "-enable-pretty-printing",
+						"ignoreFailures": true
+					}
+				],
+			},
+			{
+				"name": "(GenericEmotionCore Example) Launch",
+				"type": "cppdbg",
+				"request": "launch",
+				"program": "${workspaceFolder}/build/Example_GenericEmotionCore.exe",
+				"args": [],
+				"stopAtEntry": false,
+				"cwd": "${workspaceFolder}/build",
+				"environment": [],
+				"MIMode": "gdb",
+				"miDebuggerPath": "gdb",
+				"setupCommands": [
+					{
+						"description": "Enable pretty-printing for gdb",
+						"text": "-enable-pretty-printing",
+						"ignoreFailures": true
+					}
+				],
+			},
+		],
+		"compounds": []
+	}
+}
