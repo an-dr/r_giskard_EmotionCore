@@ -24,8 +24,8 @@
 
 #include <list>
 #include <string>
+#include "GenericEmotionCore/emotion_core_err_t.h"
 #include "InDataDescriptors_types.hpp"
-#include "error_t.h"
 
 class InDataDescriptors {
 private:
@@ -34,15 +34,15 @@ private:
 public:
     InDataDescriptors() = default;
 
-    error_t Add(const InDataDescriptorStruct_t &newDescriptor);
+    emotion_core_err_t Add(const InDataDescriptorStruct_t &newDescriptor);
 
-    error_t Remove(const std::string &name);
+    emotion_core_err_t Remove(const std::string &name);
 
     const InDataDescriptorStruct_t *Get(const std::string &name);
 
     const InDataDescriptorsList_t &GetList() const;
 
-    error_t GetParams(in_params_t &params_holder) const;
+    emotion_core_err_t GetParams(in_params_t &params_holder) const;
 
     int Size() const;
 

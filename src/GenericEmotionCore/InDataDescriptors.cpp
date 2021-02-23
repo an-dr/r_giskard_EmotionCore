@@ -24,7 +24,7 @@
 
 using namespace std;
 
-error_t InDataDescriptors::Add(const InDataDescriptorStruct_t &newDescriptor) {
+emotion_core_err_t InDataDescriptors::Add(const InDataDescriptorStruct_t &newDescriptor) {
     InDataDescriptorsList_t::iterator ind_it;
     for (ind_it = _list.begin(); ind_it != _list.end(); ind_it++) {
         if (newDescriptor.sensor_name == ind_it->sensor_name) {
@@ -35,7 +35,7 @@ error_t InDataDescriptors::Add(const InDataDescriptorStruct_t &newDescriptor) {
     return NO_ERROR;
 }
 
-error_t InDataDescriptors::Remove(const string &name) {
+emotion_core_err_t InDataDescriptors::Remove(const string &name) {
     InDataDescriptorsList_t::iterator ind_it;
     for (ind_it = _list.begin(); ind_it != _list.end(); ind_it++) {
         if (name == ind_it->sensor_name) {
@@ -60,7 +60,7 @@ const InDataDescriptorsList_t &InDataDescriptors::GetList() const {
     return _list;
 }
 
-error_t InDataDescriptors::GetParams(in_params_t &params_holder) const {
+emotion_core_err_t InDataDescriptors::GetParams(in_params_t &params_holder) const {
     params_holder.clear();
     InDataDescriptorsList_t::const_iterator ind_it;
     for (ind_it = _list.begin(); ind_it != _list.end(); ind_it++) {

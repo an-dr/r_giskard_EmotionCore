@@ -23,13 +23,19 @@
 
 #pragma once
 
-#include "GenericEmotionCore.hpp"
+#include "GenericEmotionCore/GenericEmotionCore.hpp"
 
 class AnimalEmotionCore : private GenericEmotionCore {
-    AnimalEmotionCore();
+private:
+    using GenericEmotionCore::UpdateCoreParamsFromSensorData;
+    using GenericEmotionCore::UpdateCoreParamsWithTimeUpdate;
+    using GenericEmotionCore::UpdateCurrentEmotionalState;
+    using GenericEmotionCore::UpdateParamsTotal;
 
 public:
+    AnimalEmotionCore();
     using GenericEmotionCore::AddSensorDataDescriptor;
+    using GenericEmotionCore::GetParams;
     using GenericEmotionCore::GetState;
     using GenericEmotionCore::WriteSensorData;
     using GenericEmotionCore::WriteTempImpact;

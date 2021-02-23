@@ -26,8 +26,8 @@
 #include <string>
 #include "CoreParams.hpp"
 #include "EmotionalStateDescriptors_types.hpp"
+#include "GenericEmotionCore/emotion_core_err_t.h"
 #include "InDataDescriptors.hpp"
-#include "error_t.h"
 
 
 class EmotionalStateDescriptors {
@@ -37,15 +37,15 @@ private:
 public:
     EmotionalStateDescriptors();
 
-    error_t Add(EmotionalStateDescriptorStruct_t newState);
+    emotion_core_err_t Add(EmotionalStateDescriptorStruct_t newState);
 
-    error_t Remove(std::string name);
+    emotion_core_err_t Remove(std::string name);
 
     const EmotionalStateDescriptorStruct_t *Get(std::string name) const;
 
     const EmotionalStateDescriptorsList_t &GetList() const;
 
-    error_t GetParamsSet(in_params_t &params_holder) const;
+    emotion_core_err_t GetParamsSet(in_params_t &params_holder) const;
 
     int Size();
 

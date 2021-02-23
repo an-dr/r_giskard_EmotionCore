@@ -25,17 +25,17 @@
 #include <map>
 #include <string>
 #include <vector>
-#include "error_t.h"
 #include "GenericEmotionCore/CoreParams.hpp"
 #include "GenericEmotionCore/EmotionalStateDescriptors.hpp"
 #include "GenericEmotionCore/InDataDescriptors.hpp"
 #include "GenericEmotionCore/TemporaryCoreImpact.hpp"
+#include "GenericEmotionCore/emotion_core_err_t.h"
 
 class GenericEmotionCore {
 private:
     const EmotionalStateDescriptorStruct_t *_EmotionalState_p;  ///< NULL means - non-specified state
 
-    EmotionalStateDescriptorStruct_t _non_specified_state; // FIXME bad idea, do it better
+    EmotionalStateDescriptorStruct_t _non_specified_state;  // FIXME bad idea, do it better
 
     CoreParams _params_total;
 
@@ -50,27 +50,16 @@ private:
 
     std::map<std::string, float> _sensorValues;
 
-    /**
-    * @brief Set current Emotion state based on set EmotionalStates object and current _coreState
-    * @return
-    */
-    error_t UpdateCurrentEmotionalState();
-
-    error_t UpdateParamsTotal();
 
     const InDataDescriptorStruct_t *GetDescriptorForInData(const SensorDataStruct_t &data) const;
 
-    error_t UpdateCoreParamsFromSensorData(const SensorDataStruct_t &data);
-
-    error_t UpdateCoreParamsWithTimeUpdate(const int &time_duration_ms);
-
-    static error_t CheckParamVsCondition(const std::string &par_name,
-                                         const float &par_val,
-                                         const ConditionStruct_t &cond);
+    static emotion_core_err_t CheckParamVsCondition(const std::string &par_name,
+                                                    const float &par_val,
+                                                    const ConditionStruct_t &cond);
 
     bool CheckState(const EmotionalStateDescriptorStruct_t *emo);
 
-    error_t SetState(const EmotionalStateDescriptorStruct_t *state);
+    emotion_core_err_t SetState(const EmotionalStateDescriptorStruct_t *state);
 
 protected:
 public:
@@ -80,26 +69,37 @@ public:
 
     EmotionalStateDescriptors states;  ///< an object storing possible Emotion states
 
-    error_t AddParam(const std::string &name, float default_value);
+    emotion_core_err_t AddParam(const std::string &name, float default_value);
 
-    error_t AddState(EmotionalStateDescriptorStruct_t newState);
+    emotion_core_err_t AddState(EmotionalStateDescriptorStruct_t newState);
 
-    error_t AddSensorDataDescriptor(const InDataDescriptorStruct_t &newDescriptor);
+    emotion_core_err_t AddSensorDataDescriptor(const InDataDescriptorStruct_t &newDescriptor);
 
+    /**
+    * @brief Set current Emotion state based on set EmotionalStates object and current _coreState
+    * @return
+    */
+    emotion_core_err_t UpdateCurrentEmotionalState();
+
+    emotion_core_err_t UpdateParamsTotal();
+
+    emotion_core_err_t UpdateCoreParamsFromSensorData(const SensorDataStruct_t &data);
+
+    emotion_core_err_t UpdateCoreParamsWithTimeUpdate(const int &time_duration_ms);
 
     /**
      * @brief Update current Emotion state using set InDataDescriptors and input data
      * @param data sensor name and current value
      * @return
      */
-    error_t WriteSensorData(SensorDataStruct_t data);
+    emotion_core_err_t WriteSensorData(SensorDataStruct_t data);
 
     /**
      * @brief
      * @param data
      * @return
      */
-    error_t WriteTempImpact(const TemporaryCoreImpact_t &data);
+    emotion_core_err_t WriteTempImpact(const TemporaryCoreImpact_t &data);
 
     /**
      * @brief Get a constant pointer to current Emotion state
@@ -107,7 +107,9 @@ public:
      */
     const EmotionalStateDescriptorStruct_t *GetState();
 
-    error_t WriteTime(const int &time_duration_ms);
+    const CoreParamsMap_t *GetParams();
+
+    emotion_core_err_t WriteTime(const int &time_duration_ms);
     //    TODO:
     //    EmotionCore(const InDataDescriptorsList_t &descriptors, const EmotionalStatesList_t &states);
     //    EmotionalStateStruct_t GetState();
