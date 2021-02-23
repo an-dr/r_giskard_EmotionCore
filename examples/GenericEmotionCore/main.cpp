@@ -21,11 +21,10 @@
 // *************************************************************************
 
 #include <cstdio>
-#include "GenericEmotionCore.hpp"
+#include "GenericEmotionCore/GenericEmotionCore.hpp"
 
 
-int main()
-{
+int main() {
 
     GenericEmotionCore core = GenericEmotionCore();
     core.AddParam("activity", 0);
@@ -38,15 +37,13 @@ int main()
             .conditions = {
                     {"activity", GREATER_THAN, 50},
                     {"happiness", LESS_THAN_OR_EQUAL, 0},
-            }
-    };
+            }};
     EmotionalStateDescriptorStruct_t state_happiness = {
             .name       = "happy",
             .conditions = {
                     {"activity", LESS_THAN, 10},
                     {"happiness", GREATER_THAN, 50},
-            }
-    };
+            }};
     EmotionalStateDescriptorStruct_t state_calm = {
             .name       = "calm",
             .conditions = {
@@ -54,8 +51,7 @@ int main()
                     {"activity", GREATER_THAN, -10},
                     {"happiness", LESS_THAN, 10},
                     {"happiness", GREATER_THAN, -10},
-            }
-    };
+            }};
     core.AddState(state_panic);
     core.AddState(state_happiness);
     core.AddState(state_calm);
@@ -68,8 +64,7 @@ int main()
             .weights     = {
                     {.core_param_name = "activity", .weight = -0.2},
                     {.core_param_name = "happiness", .weight = 0.3},
-            }
-    };
+            }};
     InDataDescriptorStruct_t proximity = {
             .sensor_name = "proximity_sensor",
             .val_min     = 0,
@@ -77,16 +72,14 @@ int main()
             .weights     = {
                     {.core_param_name = "activity", .weight = 0.3},
                     {.core_param_name = "happiness", .weight = -0.3},
-            }
-    };
+            }};
     core.AddSensorDataDescriptor(light_sensor);
     core.AddSensorDataDescriptor(proximity);
 
     TemporaryCoreImpact_t bad_thought = {
             .change_per_sec = 5,
-            .param_name = "happiness",
-            .delta_value = -30
-    };
+            .param_name     = "happiness",
+            .delta_value    = -30};
     core.WriteTempImpact(bad_thought);
     core.WriteTime(500);
     core.WriteTime(2000);
@@ -97,7 +90,7 @@ int main()
     printf("Zakhar is %s\n", core.GetState()->name.c_str());
 
     /*  >>>>>>>>>>> Zakhar is calm - in empty dark space */
-    core.WriteSensorData({"light_detector", 0x10});//increasing light
+    core.WriteSensorData({"light_detector", 0x10});  //increasing light
     core.WriteSensorData({"light_detector", 0x50});
     core.WriteSensorData({"light_detector", 0x100});
     core.WriteSensorData({"light_detector", 0x120});
@@ -106,18 +99,17 @@ int main()
     /*  >>>>>>>>>>> MAXIMUM LIGHT HERE - Zakhar is happy! */
     printf("Zakhar is %s\n", core.GetState()->name.c_str());
 
-    core.WriteSensorData({"light_detector", 60});// decreasing light a bit
+    core.WriteSensorData({"light_detector", 60});  // decreasing light a bit
     /* >>>>>>>>>>> Zakhar is confused */
     printf("Zakhar is %s\n", core.GetState()->name.c_str());
 
 
-
-    core.WriteSensorData({"proximity_sensor", 60});// place near Zakhar some obstacle
+    core.WriteSensorData({"proximity_sensor", 60});  // place near Zakhar some obstacle
     /* >>>>>>>>>>> Zakhar is calm - Zakhar is calm in a relatively small half-dark space */
 
-    core.WriteSensorData({"proximity_sensor", 200});// getting closer the obstacle
-    core.WriteSensorData({"proximity_sensor", 300});// super close!
-    /* >>>>>>>>>>> Zakhar is panicking, CLAUSTROPHOBIA!! */
+    core.WriteSensorData({"proximity_sensor", 200});  // getting closer the obstacle
+    core.WriteSensorData({"proximity_sensor", 300});  // super close!
+    /* >>>>>>>>>>> Zakhar is panicing, CLAUSTROPHOBIA!! */
     printf("Zakhar is %s\n", core.GetState()->name.c_str());
 
     //remove light and the obstacle
