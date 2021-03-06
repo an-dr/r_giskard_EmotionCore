@@ -159,6 +159,7 @@ emotion_core_err_t GenericEmotionCore::UpdateCoreParamsWithTimeUpdate(const int 
 
 emotion_core_err_t GenericEmotionCore::WriteTime(const int &time_duration_ms) {
     RETURN_ON_ERROR(UpdateCoreParamsWithTimeUpdate(time_duration_ms));
+    time_ms += time_duration_ms;
     RETURN_ON_ERROR(UpdateParamsTotal());
     RETURN_ON_ERROR(UpdateCurrentEmotionalState());
     return NO_ERROR;
@@ -170,7 +171,8 @@ emotion_core_err_t GenericEmotionCore::SetState(const EmotionalStateDescriptorSt
 }
 
 GenericEmotionCore::GenericEmotionCore() : _EmotionalState_p(nullptr),
-                                           _non_specified_state({.name = "non-specified", .conditions = {}}) {}
+                                           _non_specified_state({.name = "non-specified", .conditions = {}}),
+                                           time_ms(0) {}
 
 emotion_core_err_t GenericEmotionCore::UpdateParamsTotal() {
     float val;

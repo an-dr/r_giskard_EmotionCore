@@ -65,6 +65,8 @@ protected:
 public:
     GenericEmotionCore();
 
+    long time_ms;
+
     InDataDescriptors inDataDescriptors;  ///< an object storing description of input data
 
     EmotionalStateDescriptors states;  ///< an object storing possible Emotion states
