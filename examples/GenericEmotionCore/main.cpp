@@ -82,8 +82,11 @@ int main() {
             .delta_value    = -30};
     core.WriteTempImpact(bad_thought);
     core.WriteTime(500);
+    printf("Core time: %d ms\n", core.time_ms);
     core.WriteTime(2000);
+    printf("Core time: %d ms\n", core.time_ms);
     core.WriteTime(100000);
+    printf("Core time: %d ms\n", core.time_ms);
 
     /* Write sensor data */
 
