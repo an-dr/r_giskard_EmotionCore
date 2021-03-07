@@ -68,15 +68,19 @@ int main() {
 
     core.WriteTempImpact(bad_thought);
     printf("\nRight after a temprorary impact:\n");
+    printf("    time: %d ms\n", core.time_ms);
     PRINT_STATE;
 
     core.WriteTime(500);
     printf("\n500 ms later:\n");
+    printf("    time: %d ms\n", core.time_ms);
     PRINT_STATE;
 
     core.WriteTime(100000);
     printf("\n> 100sec later:\n");
+    printf("    time: %d ms\n", core.time_ms);
     PRINT_STATE;
+
 
     core.WriteSensorData({"light_detector", 0x120});
     printf("\nLight was significantly increased:\n");

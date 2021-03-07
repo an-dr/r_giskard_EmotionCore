@@ -34,6 +34,7 @@ private:
 
 public:
     AnimalEmotionCore();
+    using GenericEmotionCore::time_ms;
     using GenericEmotionCore::AddSensorDataDescriptor;
     using GenericEmotionCore::GetParams;
     using GenericEmotionCore::GetState;
