@@ -53,7 +53,7 @@ int main() {
             .weights     = {
                     {.core_param_name = "adrenaline", .weight = 0.3},
                     {.core_param_name = "cortisol", .weight = 0.3},
-                    {.core_param_name = "dopamine", .weight = -0.3},
+                    {.core_param_name = "dopamine", .weight = -2},
             }};
     core.AddSensorDataDescriptor(light_sensor);
     core.AddSensorDataDescriptor(proximity);

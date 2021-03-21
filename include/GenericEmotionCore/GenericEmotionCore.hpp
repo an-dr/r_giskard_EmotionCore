@@ -32,7 +32,8 @@
 #include "GenericEmotionCore/emotion_core_err_t.h"
 
 class GenericEmotionCore {
-private:
+protected:
+
     const EmotionalStateDescriptorStruct_t *_EmotionalState_p;  ///< NULL means - non-specified state
 
     EmotionalStateDescriptorStruct_t _non_specified_state;  // FIXME bad idea, do it better
@@ -61,7 +62,6 @@ private:
 
     emotion_core_err_t SetState(const EmotionalStateDescriptorStruct_t *state);
 
-protected:
 public:
     GenericEmotionCore();
 
@@ -83,7 +83,7 @@ public:
     */
     emotion_core_err_t UpdateCurrentEmotionalState();
 
-    emotion_core_err_t UpdateParamsTotal();
+    virtual emotion_core_err_t UpdateParamsTotal();
 
     emotion_core_err_t UpdateCoreParamsFromSensorData(const SensorDataStruct_t &data);
 

@@ -48,3 +48,22 @@ AnimalEmotionCore::AnimalEmotionCore() {
     UpdateParamsTotal();
     UpdateCurrentEmotionalState();
 }
+
+
+emotion_core_err_t AnimalEmotionCore::UpdateParamsTotal() {
+    float val;
+    for (auto i = _params_base.GetParams()->begin(); i != _params_base.GetParams()->end(); i++) {
+        val = _params_base.GetParam(i->first);
+        val += _params_sensorsImpacts.GetParam(i->first);
+        for (auto i_tmp = _params_tempImpacts.begin(); i_tmp != _params_tempImpacts.end(); i_tmp++) {
+            if (i_tmp->param_name == i->first) {
+                val += i_tmp->delta_value;
+            }
+        }
+        if (val < 0) {
+            val = 0;
+        }
+        RETURN_ON_ERROR(_params_total.SetParam(i->first, val));
+    }
+    return NO_ERROR;
+}
