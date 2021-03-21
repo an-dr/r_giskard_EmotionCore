@@ -26,12 +26,9 @@
 #include "GenericEmotionCore/GenericEmotionCore.hpp"
 
 class AnimalEmotionCore : private GenericEmotionCore {
-private:
-    using GenericEmotionCore::UpdateCoreParamsFromSensorData;
-    using GenericEmotionCore::UpdateCoreParamsWithTimeUpdate;
-    using GenericEmotionCore::UpdateCurrentEmotionalState;
+protected:
     using GenericEmotionCore::UpdateParamsTotal;
-
+    emotion_core_err_t UpdateParamsTotal();
 public:
     AnimalEmotionCore();
     using GenericEmotionCore::time_ms;
